@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {connect} from "react-redux";
 import store from './store/store';
@@ -12,11 +11,16 @@ class App extends Component {
     this.state = {
       name: "redux",
        // num:0,
-    }    
+    }  
+    this.inputFocus = React.createRef(); // Create a ref to store the textInput DOM element
   }
   componentWillMount(){
     this.props.dispatch(get())
     console.log(this.props)
+  }
+  componentDidMount(){
+    // we're accessing "current" to get the DOM node
+    this.inputFocus.current.focus()//自动获取焦点
   }
   add (attr) {
     // this.setState({num:this.state.num + 1})
@@ -28,7 +32,7 @@ class App extends Component {
     else {
       alert("混蛋住手")
     }
-  }
+  }  
   render () {
     let {num,text} = this.props
     return (
@@ -41,6 +45,8 @@ class App extends Component {
             <i onClick={this.add.bind(this,5)} className="App-add">加</i>
             <i onClick={this.reduce.bind(this,3)} className="App-reduce">减</i>
           </div>
+          <div>-----------------------------</div><br/>
+          <div><label>name:<input type='text' ref={this.inputFocus} /></label></div>
         </div>
     );
   }
